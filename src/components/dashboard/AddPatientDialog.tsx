@@ -41,9 +41,11 @@ type PatientForm = z.infer<typeof patientSchema>;
 interface AddPatientDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** When set, the new patient is handed back instead of showing the "What next?" step. */
+  onCreated?: (patientId: string) => void;
 }
 
-export function AddPatientDialog({ open, onOpenChange }: AddPatientDialogProps) {
+export function AddPatientDialog({ open, onOpenChange, onCreated }: AddPatientDialogProps) {
   const createPatient = useCreatePatient();
   const addToQueue = useAddToWaitingList();
   const [created, setCreated] = useState<{ id: string; name: string } | null>(null);
@@ -76,7 +78,8 @@ export function AddPatientDialog({ open, onOpenChange }: AddPatientDialogProps) 
       },
       {
         onSuccess: (p: any) => {
-          if (p?.id) setCreated({ id: p.id, name: `${p.first_name} ${p.last_name}` });
+          if (p?.id && onCreated) onCreated(p.id);
+          else if (p?.id) setCreated({ id: p.id, name: `${p.first_name} ${p.last_name}` });
           form.reset();
           onOpenChange(false);
         },
