@@ -13,3 +13,4 @@
 - The installed app's `/sw.js` (scope /app/) never caches pages; it clears legacy caches and handles Web Push (VAPID, sent from a super-admin server function) whose taps open /app/inbox/:id.
 - Dental dashboard data is role-focused: leadership sees clinic financials, dentists see their assigned schedule, and front-desk roles see queue and collections.
 - Public marketing pages use CDN-backed snapshots of the current dashboard; tutorial image files remain isolated and unchanged.
+- Every shipped feature, improvement or bug fix must be logged as a new entry (newest first) in `src/data/updates.ts` (the public /updates page) in the same change — no exceptions.
