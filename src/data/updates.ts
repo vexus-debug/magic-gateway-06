@@ -13,6 +13,22 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.4.1",
+    date: "October 22, 2026",
+    title: "Always-fresh app & notification check",
+    kind: "improvement",
+    items: [
+      {
+        kind: "improvement",
+        text: "Installed apps now check for updates in the background every hour, so everyone is on the latest version without reinstalling or tapping anything.",
+      },
+      {
+        kind: "feature",
+        text: "The installed app now asks to turn on notifications before it opens, so no one misses clinic alerts. If notifications were blocked, the app shows how to re-enable them.",
+      },
+    ],
+  },
+  {
     version: "v1.4.0",
     date: "October 22, 2026",
     title: "Register new patients on the spot",
