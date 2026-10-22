@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 import SelectClinic from "./pages/SelectClinic";
 import NotFound from "./pages/NotFound";
 import SiteIndex from "./site/pages/Index";
+import SiteUpdates from "./site/pages/Updates";
 import SiteIndustries from "./site/pages/Industries";
 import SiteEyeClinics from "./site/pages/EyeClinics";
 import SiteEyeClinicFeatures from "./site/pages/EyeClinicFeatures";
@@ -227,6 +228,7 @@ const App = () => (
             <Route path="/industries/dental-clinics" element={<SiteDentalClinics />} />
             <Route path="/industries/dental-clinics/features" element={<SiteDentalClinicFeatures />} />
             <Route path="/about" element={<SiteAbout />} />
+            <Route path="/updates" element={<SiteUpdates />} />
             <Route path="/contact" element={<SiteContact />} />
             <Route path="/privacy" element={<SitePrivacy />} />
             <Route path="/terms" element={<SiteTerms />} />
