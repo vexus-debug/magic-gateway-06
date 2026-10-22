@@ -10,6 +10,7 @@ import { useCreateAppointment } from "@/hooks/useAppointments";
 import { format } from "date-fns";
 import { useClinicTerms } from "@/hooks/useClinicTerms";
 import { useAddToWaitingList } from "@/hooks/useWaitingList";
+import { AddPatientDialog } from "@/components/dashboard/AddPatientDialog";
 
 interface WalkInDialogProps {
   open: boolean;
@@ -22,6 +23,7 @@ export function WalkInDialog({ open, onOpenChange }: WalkInDialogProps) {
   const [treatmentId, setTreatmentId] = useState("");
   const [staffId, setStaffId] = useState("");
   const [chair, setChair] = useState("Chair 1");
+  const [newOpen, setNewOpen] = useState(false);
 
   const { data: patients = [] } = usePatients();
   const { data: treatments = [] } = useTreatments();
@@ -65,6 +67,7 @@ export function WalkInDialog({ open, onOpenChange }: WalkInDialogProps) {
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -72,7 +75,10 @@ export function WalkInDialog({ open, onOpenChange }: WalkInDialogProps) {
         </DialogHeader>
         <div className="space-y-4 pt-2">
           <div className="space-y-2">
-            <Label>Patient *</Label>
+            <div className="flex items-center justify-between">
+              <Label>Patient *</Label>
+              <Button type="button" size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setNewOpen(true)}>+ New patient</Button>
+            </div>
             <Select value={patientId} onValueChange={setPatientId}>
               <SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
               <SelectContent>
@@ -121,5 +127,7 @@ export function WalkInDialog({ open, onOpenChange }: WalkInDialogProps) {
         </div>
       </DialogContent>
     </Dialog>
+    <AddPatientDialog open={newOpen} onOpenChange={setNewOpen} onCreated={(id) => setPatientId(id)} />
+    </>
   );
 }

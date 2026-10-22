@@ -26,6 +26,7 @@ import { useClinicTerms } from "@/hooks/useClinicTerms";
 import { useDentistSchedules, DAY_NAMES } from "@/hooks/useDentistSchedules";
 import { useAppointmentsByDate } from "@/hooks/useAppointments";
 import { AlertTriangle } from "lucide-react";
+import { AddPatientDialog } from "@/components/dashboard/AddPatientDialog";
 
 function slotToHHMM(slot: string) {
   const m = slot.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
@@ -73,6 +74,7 @@ export function BookAppointmentDialog({ open, onOpenChange, preselectedPatientId
   const { data: dentists = [] } = useDentists();
   const { data: treatments = [] } = useTreatments();
   const createAppointment = useCreateAppointment();
+  const [newOpen, setNewOpen] = useState(false);
 
   const form = useForm<BookingForm>({
     resolver: zodResolver(bookingSchema),
@@ -146,6 +148,8 @@ export function BookAppointmentDialog({ open, onOpenChange, preselectedPatientId
   }
 
   return (
+    <>
+    <AddPatientDialog open={newOpen} onOpenChange={setNewOpen} onCreated={(id) => form.setValue("patientId", id, { shouldValidate: true })} />
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
         <DialogHeader>
@@ -158,7 +162,10 @@ export function BookAppointmentDialog({ open, onOpenChange, preselectedPatientId
             {/* Patient */}
             <FormField control={form.control} name="patientId" render={({ field }) => (
               <FormItem>
-                <FormLabel>Patient *</FormLabel>
+                <div className="flex items-center justify-between">
+                  <FormLabel>Patient *</FormLabel>
+                  <Button type="button" size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => setNewOpen(true)}>+ New patient</Button>
+                </div>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger><SelectValue placeholder="Select patient" /></SelectTrigger>
@@ -314,5 +321,6 @@ export function BookAppointmentDialog({ open, onOpenChange, preselectedPatientId
         </Form>
       </DialogContent>
     </Dialog>
+    </>
   );
 }
