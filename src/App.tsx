@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "rea
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ProtectedAdminRoute } from "@/components/admin/ProtectedAdminRoute";
+import { PushPermissionGate } from "@/components/PushPermissionGate";
 import { OrgProvider } from "@/hooks/useOrg";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -259,7 +260,7 @@ const App = () => (
             {/* Installed-app area: everything under /app stays inside the PWA.
                 Public site links live outside this prefix, so they always open
                 in the normal browser instead of the installed app. */}
-            <Route path="/app">
+            <Route path="/app" element={<PushPermissionGate />}>
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
               <Route path="select-clinic" element={<SelectClinic />} />
