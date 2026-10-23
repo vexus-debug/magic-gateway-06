@@ -13,6 +13,15 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.5.0",
+    date: "October 23, 2026",
+    title: "AI pre-chair patient briefing",
+    kind: "feature",
+    items: [
+      { kind: "feature", text: "Dentists get an AI snapshot of allergies, conditions, last visit, today's plan and patient notes — in the waiting-room queue (sparkle button) and at the top of the dental chart." },
+    ],
+  },
+  {
     version: "v1.4.4",
     date: "October 23, 2026",
     title: "Free AI models",

@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { PatientBriefing } from "@/components/dashboard/PatientBriefing";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNowStrict } from "date-fns";
-import { Armchair, Loader2, Play, Stethoscope, Users } from "lucide-react";
+import { Armchair, Loader2, Play, Sparkles, Stethoscope, Users } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -68,11 +69,14 @@ export function DentistWaitingRoomCard({ staffId }: { staffId: string | null }) 
     navigate(`${basePath}/dental-charts?patientId=${r.patient_id}`);
   };
 
+  const [openBrief, setOpenBrief] = useState<string | null>(null);
+
   const Row = ({ r, active }: { r: QueueRow; active?: boolean }) => {
     const name = `${r.patients?.first_name || ""} ${r.patients?.last_name || ""}`.trim() || "Patient";
     const chair = r.chair || r.appointments?.chair;
     return (
-      <div className="flex items-center gap-3 rounded-md border border-border/60 bg-background/60 p-3">
+      <div className="space-y-2 rounded-md border border-border/60 bg-background/60 p-3">
+      <div className="flex items-center gap-3">
         <Avatar className="h-9 w-9">
           <AvatarFallback className="bg-primary/10 text-xs font-bold text-primary">
             {name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
@@ -96,6 +100,11 @@ export function DentistWaitingRoomCard({ staffId }: { staffId: string | null }) 
             {startVisit.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />} Call & Start
           </Button>
         )}
+        <Button size="icon" variant="ghost" className="h-8 w-8 shrink-0" aria-label="AI briefing" onClick={() => setOpenBrief(openBrief === r.id ? null : r.id)}>
+          <Sparkles className="h-4 w-4 text-primary" />
+        </Button>
+      </div>
+      {openBrief === r.id && <PatientBriefing patientId={r.patient_id} compact />}
       </div>
     );
   };

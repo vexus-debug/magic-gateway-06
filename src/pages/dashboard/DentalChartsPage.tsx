@@ -334,6 +334,7 @@ export default function DentalChartsPage() {
   return (
     <div className="space-y-6">
       {patientId && <PatientVisitBar patientId={patientId} onClear={() => { setSelectedPatientId(""); setSelectedTooth(null); }} />}
+      {patientId && <PatientBriefing patientId={patientId} />}
       <PageHeader
         title="Dental Charts"
         description="Interactive tooth chart per patient"
