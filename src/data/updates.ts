@@ -13,6 +13,15 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.4.4",
+    date: "October 23, 2026",
+    title: "Free AI models",
+    kind: "improvement",
+    items: [
+      { kind: "improvement", text: "AI assistant now uses only free models, automatically falling back through 16 options." },
+    ],
+  },
+  {
     version: "v1.4.3",
     date: "October 23, 2026",
     title: "AI automatic fallback",

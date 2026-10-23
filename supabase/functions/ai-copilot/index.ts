@@ -2504,56 +2504,68 @@ serve(async (req) => {
     ];
 
     const NVIDIA_URL = "https://openrouter.ai/api/v1/chat/completions";
-    // OpenRouter model.
-    const NVIDIA_MODEL = "google/gemini-2.5-flash";
+    // Free OpenRouter models with tool support, tried in order until one succeeds.
+    const FREE_MODELS = [
+      "nvidia/nemotron-3.5-super-vl:free",
+      "google/gemma-4-31b-it:free",
+      "nvidia/nemotron-3-super-120b-a12b:free",
+      "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "google/gemma-4-26b-a4b-it:free",
+      "thinkingmachines/inkling:free",
+      "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "xingchen-agi/xing4.0-29b-a4b:free",
+      "dots-studio/dots-3-note-preview:free",
+      "poolside/laguna-s-2.1:free",
+      "nvidia/nemotron-3.5-lightning:free",
+      "thinkingmachines/inkling-small:free",
+      "recursive/flint-v1.0:free",
+      "cohere/north-mini-code:free",
+      "poolside/laguna-xs-2.1:free",
+      "liquid/lfm-2.5-2.6b:free",
+    ];
 
     let rounds = 8;
 
     while (rounds-- > 0) {
-      const body = {
-        model: NVIDIA_MODEL,
-        // Automatic fallback: OpenRouter tries these in order if the primary fails.
-        models: [NVIDIA_MODEL, "openai/gpt-4o-mini", "anthropic/claude-3.5-haiku", "meta-llama/llama-3.3-70b-instruct"],
-        provider: { allow_fallbacks: true },
-        messages: openaiMessages,
-        tools: openaiTools,
-        temperature: 1,
-        top_p: 0.95,
-        max_tokens: 8192,
-      };
-
-      let result: any;
-      try {
-        console.log(`Calling NVIDIA model=${NVIDIA_MODEL} messages=${openaiMessages.length} tools=${openaiTools.length}`);
-        const response = await fetch(NVIDIA_URL, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${NVIDIA_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-          signal: AbortSignal.timeout(120_000),
-        });
-        console.log(`NVIDIA responded status=${response.status}`);
-
-        if (!response.ok) {
-          const errText = await response.text();
-          console.error(`NVIDIA API error [${response.status}]: ${errText}`);
-          if (response.status === 429) {
-            return new Response(JSON.stringify({ error: "Rate limited by the AI provider. Please try again shortly." }), {
-              status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
-            });
-          }
-          return new Response(JSON.stringify({ error: `AI provider error: ${response.status} ${errText}` }), {
-            status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      let result: any = null;
+      let lastErr = "AI service unavailable";
+      let lastStatus = 503;
+      for (const model of FREE_MODELS) {
+        try {
+          const response = await fetch(NVIDIA_URL, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${NVIDIA_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model,
+              messages: openaiMessages,
+              tools: openaiTools,
+              temperature: 1,
+              top_p: 0.95,
+              max_tokens: 8192,
+            }),
+            signal: AbortSignal.timeout(60_000),
           });
+          if (!response.ok) {
+            lastStatus = response.status;
+            lastErr = await response.text();
+            console.error(`OpenRouter ${model} error [${response.status}]: ${lastErr}`);
+            continue;
+          }
+          const json = await response.json();
+          if (!json.choices?.[0]) { lastErr = JSON.stringify(json.error ?? json); continue; }
+          result = json;
+          break;
+        } catch (e) {
+          lastErr = e instanceof Error ? e.message : String(e);
+          console.error(`OpenRouter ${model} failed:`, e);
         }
-
-        result = await response.json();
-      } catch (e) {
-        console.error("NVIDIA API call failed:", e);
-        return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "AI service unavailable" }), {
-          status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
+      if (!result) {
+        return new Response(JSON.stringify({ error: `All free AI models unavailable: ${lastErr}` }), {
+          status: lastStatus === 429 ? 429 : 503, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
