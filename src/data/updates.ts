@@ -13,6 +13,15 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.4.2",
+    date: "October 23, 2026",
+    title: "New AI provider",
+    kind: "improvement",
+    items: [
+      { kind: "improvement", text: "ClineXus AI assistant now runs on OpenRouter." },
+    ],
+  },
+  {
     version: "v1.4.1",
     date: "October 22, 2026",
     title: "Always-fresh app & notification check",
