@@ -2512,6 +2512,9 @@ serve(async (req) => {
     while (rounds-- > 0) {
       const body = {
         model: NVIDIA_MODEL,
+        // Automatic fallback: OpenRouter tries these in order if the primary fails.
+        models: [NVIDIA_MODEL, "openai/gpt-4o-mini", "anthropic/claude-3.5-haiku", "meta-llama/llama-3.3-70b-instruct"],
+        provider: { allow_fallbacks: true },
         messages: openaiMessages,
         tools: openaiTools,
         temperature: 1,
