@@ -13,6 +13,15 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.4.3",
+    date: "October 23, 2026",
+    title: "AI automatic fallback",
+    kind: "improvement",
+    items: [
+      { kind: "improvement", text: "AI assistant now switches to a backup model automatically if the main one is unavailable." },
+    ],
+  },
+  {
     version: "v1.4.2",
     date: "October 23, 2026",
     title: "New AI provider",
