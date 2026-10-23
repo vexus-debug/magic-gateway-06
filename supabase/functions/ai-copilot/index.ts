@@ -2440,9 +2440,9 @@ serve(async (req) => {
   try {
     const { messages, context, orgId } = await req.json();
 
-    const NVIDIA_API_KEY = Deno.env.get("NVIDIA_API_KEY");
+    const NVIDIA_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
     if (!NVIDIA_API_KEY) {
-      return new Response(JSON.stringify({ error: "NVIDIA_API_KEY is not configured." }), {
+      return new Response(JSON.stringify({ error: "OPENROUTER_API_KEY is not configured." }), {
         status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -2503,9 +2503,9 @@ serve(async (req) => {
       }),
     ];
 
-    const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
-    // Model chosen by user.
-    const NVIDIA_MODEL = "meta/muse-glimmer-30b";
+    const NVIDIA_URL = "https://openrouter.ai/api/v1/chat/completions";
+    // OpenRouter model.
+    const NVIDIA_MODEL = "google/gemini-2.5-flash";
 
     let rounds = 8;
 
