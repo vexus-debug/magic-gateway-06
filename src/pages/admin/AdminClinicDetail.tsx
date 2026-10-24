@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Building2, Users, UserCheck, CalendarDays, CreditCard, Activity, Clock } from "lucide-react";
 import { AnimatedCounter } from "@/components/dashboard/AnimatedCounter";
 import { format } from "date-fns";
+import { AdminWalletTopup } from "@/components/dashboard/CaseWallet";
 
 function useClinicDetail(slug: string) {
   return useQuery({
@@ -93,6 +94,8 @@ export default function AdminClinicDetail() {
           <p className="text-sm text-muted-foreground mt-0.5">/{org.slug} • {org.clinic_type} • Created {format(new Date(org.created_at), "MMM d, yyyy")}</p>
         </div>
       </div>
+
+      {org.clinic_type === "dental" && !org.parent_org_id && <AdminWalletTopup orgId={org.id} />}
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

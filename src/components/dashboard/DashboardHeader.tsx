@@ -13,6 +13,7 @@ import { useOrg } from "@/hooks/useOrg";
 import { useUnreadCount } from "@/hooks/useNotifications";
 import { extractRelativePath } from "@/config/roleAccess";
 import { QuickSearchAdd } from "@/components/dashboard/QuickSearchAdd";
+import { CaseWalletBadge } from "@/components/dashboard/CaseWallet";
 import { motion } from "framer-motion";
 
 const breadcrumbLabels: Record<string, string> = {
@@ -106,6 +107,7 @@ export function DashboardHeader({ onToggleAI, aiOpen, appearance = "light", onTo
       <QuickSearchAdd />
 
       <div className="flex items-center gap-1">
+        <CaseWalletBadge />
         {onToggleAppearance && (
           <Button
             variant="ghost"
