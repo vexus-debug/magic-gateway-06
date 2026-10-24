@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { useTreatments } from "@/hooks/useTreatments";
 import { usePatientContext } from "@/hooks/usePatientContext";
 import { PatientVisitBar } from "@/components/dashboard/PatientVisitBar";
+import { PatientBriefing } from "@/components/dashboard/PatientBriefing";
 import { conditionProcedure, matchCatalogTreatment, useAddChartItemToPlan } from "@/hooks/useVisitFlow";
 import { FlaskConical, CheckSquare, X, Plus, ClipboardPlus, Edit2, Trash2, Calendar, User, FileText, ChevronDown, ChevronUp } from "lucide-react";
 
