@@ -13,6 +13,16 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.6.1",
+    date: "October 24, 2026",
+    title: "Case billing can't be bypassed",
+    kind: "fix",
+    items: [
+      { kind: "fix", text: "Adding notes, treatment plans or chart entries for a patient without an active case now uses a case credit." },
+      { kind: "fix", text: "The patient on a note, treatment plan or chart entry can no longer be changed." },
+    ],
+  },
+  {
     version: "v1.6.0",
     date: "October 24, 2026",
     title: "Pay-per-case billing for dental clinics",
