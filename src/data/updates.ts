@@ -13,6 +13,17 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.6.0",
+    date: "October 24, 2026",
+    title: "Pay-per-case billing for dental clinics",
+    kind: "feature",
+    items: [
+      { kind: "feature", text: "Dental clinics now use prepaid case credits at ₦500 per case; a case covers a patient for 30 days." },
+      { kind: "feature", text: "Credit balance shows in the dashboard header; at zero, new visits and walk-ins are blocked while existing records stay open." },
+      { kind: "improvement", text: "The patient on a visit can no longer be swapped, and deleted visits don't refund credits." },
+    ],
+  },
+  {
     version: "v1.5.0",
     date: "October 23, 2026",
     title: "AI pre-chair patient briefing",

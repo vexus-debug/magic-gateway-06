@@ -470,6 +470,32 @@ export type Database = {
           },
         ]
       }
+      clinic_wallets: {
+        Row: {
+          balance: number
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          balance?: number
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          balance?: number
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clinic_wallets_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clinical_notes: {
         Row: {
           appointment_id: string | null
@@ -5707,6 +5733,50 @@ export type Database = {
           },
         ]
       }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string | null
+          org_id: string
+          patient_id: string | null
+          reference_id: string | null
+          type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          org_id: string
+          patient_id?: string | null
+          reference_id?: string | null
+          type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          org_id?: string
+          patient_id?: string | null
+          reference_id?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       war_chest_entries: {
         Row: {
           amount: number
@@ -5750,6 +5820,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_topup_wallet: {
+        Args: { p_credits: number; p_note?: string; p_org_id: string }
+        Returns: number
+      }
       create_branch: {
         Args: {
           p_address?: string
