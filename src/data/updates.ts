@@ -13,6 +13,17 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.6.3",
+    date: "October 25, 2026",
+    title: "Case credits explained, now ₦1,000 per case",
+    kind: "improvement",
+    items: [
+      { kind: "improvement", text: "Case price is now ₦1,000 per case." },
+      { kind: "feature", text: "A 'How credits work' guide with examples opens from the wallet button." },
+      { kind: "feature", text: "New article explaining pay-per-case billing." },
+    ],
+  },
+  {
     version: "v1.6.2",
     date: "October 25, 2026",
     title: "All case billing loopholes closed",
@@ -43,7 +54,7 @@ export const updates: UpdateEntry[] = [
     title: "Pay-per-case billing for dental clinics",
     kind: "feature",
     items: [
-      { kind: "feature", text: "Dental clinics now use prepaid case credits at ₦500 per case; a case covers a patient for 30 days." },
+      { kind: "feature", text: "Dental clinics now use prepaid case credits at ₦1,000 per case; a case covers a patient for 30 days." },
       { kind: "feature", text: "Credit balance shows in the dashboard header; at zero, new visits and walk-ins are blocked while existing records stay open." },
       { kind: "improvement", text: "The patient on a visit can no longer be swapped, and deleted visits don't refund credits." },
     ],

@@ -9,7 +9,43 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Wallet } from "lucide-react";
 import { toast } from "sonner";
 
-export const PRICE_PER_CASE = 500; // ₦ per case
+export const PRICE_PER_CASE = 1000; // ₦ per case
+
+const HOW_IT_WORKS: { title: string; text: string }[] = [
+  { title: "What is a case?", text: "One patient's care for 30 days. It costs 1 credit (₦1,000)." },
+  { title: "When is a credit used?", text: "The first time you book, check in, or record a note, plan, chart, image, prescription, lab order or invoice for a patient with no open case." },
+  { title: "What does a case cover?", text: "Everything for that patient for 30 days, up to 3 visits. The 4th visit, or any visit after 30 days, starts a new case." },
+  { title: "What is never charged?", text: "Viewing records, editing open cases, registering a patient, and reports." },
+  { title: "At zero credits", text: "Old records stay open, but new cases are blocked until you top up." },
+  { title: "No refunds on delete", text: "Deleting or cancelling a visit does not return the credit." },
+];
+
+const EXAMPLES = [
+  "Check-up and scaling today, follow-up in 2 weeks → 1 credit.",
+  "Root canal: 3 visits within 30 days → 1 credit. A crown on day 40 → 1 more credit.",
+  "Walk-in for pain, then returns 2 months later → 2 credits.",
+  "4 visits in the same month → 2 credits.",
+];
+
+export function CaseCreditsGuide() {
+  return (
+    <div className="space-y-4 text-sm">
+      {HOW_IT_WORKS.map((r) => (
+        <div key={r.title}>
+          <p className="font-semibold">{r.title}</p>
+          <p className="text-muted-foreground">{r.text}</p>
+        </div>
+      ))}
+      <div>
+        <p className="font-semibold">Examples</p>
+        <ul className="mt-1 list-disc space-y-1 pl-5 text-muted-foreground">
+          {EXAMPLES.map((e) => <li key={e}>{e}</li>)}
+        </ul>
+      </div>
+      <a href="/articles/how-case-credits-work" className="font-medium text-primary underline">Read the full guide</a>
+    </div>
+  );
+}
 
 const db = supabase as any;
 
