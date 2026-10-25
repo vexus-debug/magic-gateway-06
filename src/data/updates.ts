@@ -13,6 +13,21 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v1.6.2",
+    date: "October 25, 2026",
+    title: "All case billing loopholes closed",
+    kind: "fix",
+    items: [
+      { kind: "fix", text: "A patient's name and date of birth are locked after their first case." },
+      { kind: "fix", text: "One case covers up to 3 visits in 30 days; the 4th visit uses a new credit." },
+      { kind: "fix", text: "Moving or reopening an old appointment outside its case window uses a credit." },
+      { kind: "fix", text: "Invoices, prescriptions, lab orders, documents and images now need an active case." },
+      { kind: "fix", text: "Adding items to old treatment plans or prescriptions needs an active case." },
+      { kind: "fix", text: "Only platform admins can change a clinic's type." },
+      { kind: "fix", text: "Finished waiting-room check-ins can't be reset to waiting." },
+    ],
+  },
+  {
     version: "v1.6.1",
     date: "October 24, 2026",
     title: "Case billing can't be bypassed",
