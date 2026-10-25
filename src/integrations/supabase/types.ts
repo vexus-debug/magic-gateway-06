@@ -5854,6 +5854,15 @@ export type Database = {
         }
         Returns: string
       }
+      ensure_case_credit: {
+        Args: {
+          p_is_visit: boolean
+          p_org: string
+          p_patient: string
+          p_ref: string
+        }
+        Returns: undefined
+      }
       get_org_role: {
         Args: { _org_id: string; _user_id: string }
         Returns: Database["public"]["Enums"]["org_role"]
